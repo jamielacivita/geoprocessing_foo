@@ -1,5 +1,6 @@
 import json
 import logging.config
+import uuid
 logging.config.fileConfig("configuration.ini")
 logm = logging.getLogger("marker")
 __all__ = ["marker"]
@@ -34,6 +35,15 @@ class feature:
         self.features_dict["properties"] = self.properties_dict
         logm.debug(f"features_dict : {self.features_dict}")
 
+    def setCoordinates(self, lat=-116.2107476592064, lon=43.642500235012506):
+        self.geometry_dict["coordinates"] = [lat, lon]
+
+
+    def setID(self):
+        self.features_dict["id"] = str(uuid.uuid1())
+    def get_dict(self):
+        return self.features_dict
+
 class marker:
     def __init__(self):
         print("In __init__")
@@ -52,12 +62,37 @@ class marker:
         self.x = {"features": self.features_lst, "type": "FeatureCollection"}
         self.y = json.dumps(self.x)
 
+    def buildMarker(self,cords):
+        """
+        :param cords: a list of coordinate tuples
+        :return:
+        """
+        logm.debug("In buildMarker")
+        logm.debug((f"coords : {cords}"))
+        for c in cords:
+            feat = feature()
+            feat.setDefaults()
+            feat.setCoordinates(c[0],c[1])
+            logm.debug(f"feat after setting coordinates : {feat}")
+            feat.setID()
+            logm.debug(f"feat after setting id to uuid : {feat}")
+            self.features_lst.append(feat.features_dict)
+
+        self.x = {"features": self.features_lst, "type": "FeatureCollection"}
+        self.y = json.dumps(self.x)
+        print("printing the resulting json string")
+        print(self.y)
+
+
     def writeDefaults(self):
         with open("default.json","w") as f:
             f.write(self.y)
         f.close()
 
-
+    def writeJSON(self):
+        with open("marker.json","w") as f:
+            f.write(self.y)
+        f.close()
 
 
 def makeMarker():
