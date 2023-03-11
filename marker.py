@@ -4,18 +4,17 @@ logging.config.fileConfig("configuration.ini")
 logm = logging.getLogger("marker")
 __all__ = ["marker"]
 
-class marker:
+class feature:
     def __init__(self):
-        print("In __init__")
         logm.debug("In __init__")
         self.geometry_dict = {}
         self.properties_dict = {}
         self.features_dict = {}
-        self.features_lst = []
 
     def setDefaults(self):
         logm.debug("In setDefaults")
-        self.geometry_dict["coordinates"] = [-111.210, 44.000]
+        self.geometry_dict["coordinates"] = [-116.2107476592064,43.642500235012506]
+        # Location of 2300 Hillway : -116.2107476592064,43.642500235012506
         self.geometry_dict["type"] = "Point"
         logm.debug(f"geometry_dict : {self.geometry_dict}")
 
@@ -35,7 +34,19 @@ class marker:
         self.features_dict["properties"] = self.properties_dict
         logm.debug(f"features_dict : {self.features_dict}")
 
-        self.features_lst.append(self.features_dict)
+class marker:
+    def __init__(self):
+        print("In __init__")
+        logm.debug("In __init__")
+        self.features_lst = []
+
+    def setDefaults(self):
+        logm.debug("In setDefaults")
+        self.default_feature = feature()
+        self.default_feature.setDefaults()
+
+        #each feature (marker etc.) is encapsulated in a features_dict.
+        self.features_lst.append(self.default_feature.features_dict)
         logm.debug(f"features_lst : {self.features_lst}")
 
         self.x = {"features": self.features_lst, "type": "FeatureCollection"}
