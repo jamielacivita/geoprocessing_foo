@@ -1,4 +1,4 @@
-
+import json
 import logging
 import logging.config
 import marker
@@ -14,10 +14,12 @@ __all__ = ["main"]
 
 def main():
     print("JWTO.")
-    print("MYTO...")
-    y = marker.makeMarker()
-    print(y)
-    print(type(y))
+    y = marker.marker()
+    y.setDefaults()
+    y.writeDefaults()
+
+
+
 
 
 

@@ -4,6 +4,50 @@ logging.config.fileConfig("configuration.ini")
 logm = logging.getLogger("marker")
 __all__ = ["marker"]
 
+class marker:
+    def __init__(self):
+        print("In __init__")
+        logm.debug("In __init__")
+        self.geometry_dict = {}
+        self.properties_dict = {}
+        self.features_dict = {}
+        self.features_lst = []
+
+    def setDefaults(self):
+        logm.debug("In setDefaults")
+        self.geometry_dict["coordinates"] = [-111.210, 44.000]
+        self.geometry_dict["type"] = "Point"
+        logm.debug(f"geometry_dict : {self.geometry_dict}")
+
+        self.properties_dict["marker-symbol"] = "point"
+        self.properties_dict["marker-color"] = "FF0000"
+        self.properties_dict["description"] = "These are comments"
+        self.properties_dict["title"] = "Test Marker"
+        self.properties_dict["marker-size"] = "1"
+        self.properties_dict["class"] = "Marker"
+        self.properties_dict["folderID"] = "null"
+        self.properties_dict["marker-rotation"] = "null"
+        logm.debug(f"properties_dict : {self.properties_dict}")
+
+        self.features_dict["geometry"] = self.geometry_dict
+        self.features_dict["id"] = "23ec14"
+        self.features_dict["type"] = "Feature"
+        self.features_dict["properties"] = self.properties_dict
+        logm.debug(f"features_dict : {self.features_dict}")
+
+        self.features_lst.append(self.features_dict)
+        logm.debug(f"features_lst : {self.features_lst}")
+
+        self.x = {"features": self.features_lst, "type": "FeatureCollection"}
+        self.y = json.dumps(self.x)
+
+    def writeDefaults(self):
+        with open("default.json","w") as f:
+            f.write(self.y)
+        f.close()
+
+
+
 
 def makeMarker():
     geometry_dict = {}
