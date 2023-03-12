@@ -2,23 +2,23 @@ import json
 import logging
 import logging.config
 import marker
+import coordinates
 
 
 logging.config.fileConfig("configuration.ini")
 log = logging.getLogger("main")
-print(log)
 __all__ = ["main"]
 
-
-
-
-
 def main():
-    print("JWTO.")
+    log.debug("starting main.")
     y = marker.marker()
     #y.setDefaults()
-    y.buildMarker([(-116.1,43.1),(-116.2,43.2),(-116.3,43.3)])
+    #y.buildMarker([(-116.1,43.10),(-116.1,43.11)])
+    y.buildMarker(coordinates.getcoordinate_list(200000))
+
     print(y)
+    y.writeJSON()
+    log.debug("ending main.")
 
 
 
