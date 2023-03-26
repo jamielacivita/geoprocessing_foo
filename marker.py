@@ -123,10 +123,41 @@ class marker:
             f.write(self.y)
         f.close()
 
-    def writeJSON(self):
-        with open("marker_huge.json","w") as f:
+    def writeJSON(self,filename="marker_test"):
+        with open(filename,"w") as f:
             f.write(str(self.y))
         f.close()
+
+
+    def writeTXT(self,lst,filename="marker_test"):
+        with open(filename,"w") as f:
+            for l in lst:
+                lat = l[0]
+                lon = l[1]
+                id = l[2]
+                f.write(str((lon,lat,id))+"\n")
+        f.close()
+
+
+
+def get_lat(line):
+    #log.debug(line)
+    lat = line.split('lat="')[1]
+    lat = lat.split('"')[0]
+    #log.debug(lat)
+    return str(lat)
+
+def get_lon(line):
+    #log.debug(line)
+    lon = line.split('lon="')[1]
+    lon = lon.split('"')[0]
+    #log.debug(lon)
+    return str(lon)
+
+def get_id(line):
+    lon = line.split('id="')[1]
+    lon = lon.split('"')[0]
+    return str(lon)
 
 
 def makeMarker():
