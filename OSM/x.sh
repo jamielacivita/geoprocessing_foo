@@ -13,7 +13,10 @@ echo "Resulting file size is 254M."
 
 echo "Restrict to only the street control points."
 
-osmosis --read-xml boise_city_area.osm --tf accept-ways highway=* --tf reject-ways highway=service --tf reject-ways highway=path --tf reject-ways surface=dirt --tf reject-ways highway=footway --used-node --write-xml boise_street_control_points.osm
+#osmosis --read-xml boise_city_area.osm --tf accept-ways highway=* --tf reject-ways highway=service --tf reject-ways highway=path --tf reject-ways surface=dirt --tf reject-ways highway=footway --used-node --write-xml boise_street_control_points.osm
+
+osmosis --read-xml boise_city_area.osm --tf accept-ways highway=* --tf reject-ways highway=service --tf reject-ways highway=path --tf reject-ways surface=dirt --tf reject-ways highway=footway --tf reject-ways highway=steps --tf reject-ways highway=pedestrian --used-node --write-xml boise_street_control_points.osm
+
 
 echo "remove boise_city_area file since we've reduced it to the street control points."
 rm boise_city_area.osm
